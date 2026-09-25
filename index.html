@@ -3,137 +3,344 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Un detalle especial 🌻</title>
+    <title>¡Feliz Cumpleaños! 🎂✨</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: #0f0e13;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b0a10;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: x-hidden;
             position: relative;
         }
-        .bg-glow {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, rgba(0,0,0,0) 70%);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+
+        /* Canvas de fuegos artificiales */
+        #fwCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
-        .card {
+
+        .container {
             position: relative;
             z-index: 10;
-            width: 88%;
-            max-width: 350px;
-            padding: 30px 22px;
+            width: 92%;
+            max-width: 380px;
+            text-align: center;
+            padding: 25px 20px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            border-radius: 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            margin: 20px 0;
         }
-        .flower {
-            font-size: 65px;
-            cursor: pointer;
-            margin-bottom: 10px;
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-        .flower:hover { transform: scale(1.1) rotate(5deg); }
+
         .title {
+            font-size: 22px;
+            font-weight: 700;
             color: #ffd700;
-            font-size: 20px;
-            margin-bottom: 8px;
-            font-weight: 600;
+            margin-bottom: 6px;
         }
+
         .subtitle {
-            color: #aaa;
             font-size: 13px;
+            color: #a0a0b0;
             margin-bottom: 20px;
         }
-        .btn {
-            background: linear-gradient(135deg, #ffd700, #ffa500);
-            color: #000;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 14px;
+
+        /* Pastel CSS */
+        .cake-container {
+            margin: 25px auto;
+            width: 120px;
+            height: 120px;
+            position: relative;
             cursor: pointer;
         }
-        .letter {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.6s ease;
-            text-align: left;
-            font-size: 13px;
-            color: #ddd;
-            line-height: 1.6;
-        }
-        .letter.show {
-            max-height: 300px;
-            opacity: 1;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,215,0,0.2);
-        }
-        .petal {
+        .cake {
             position: absolute;
-            top: -10px;
-            color: #ffd700;
-            font-size: 14px;
-            user-select: none;
-            animation: fall linear infinite;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 60px;
+            background: linear-gradient(to right, #e0a96d, #f4c481, #e0a96d);
+            border-radius: 12px 12px 6px 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
-        @keyframes fall {
-            to { transform: translateY(105vh) rotate(360deg); }
+        .cake::before {
+            content: '';
+            position: absolute;
+            top: -15px; left: 0;
+            width: 100%; height: 20px;
+            background: #fff;
+            border-radius: 10px 10px 15px 15px;
+        }
+        .candles {
+            position: absolute;
+            top: 25px; left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+        .candle {
+            width: 8px;
+            height: 25px;
+            background: linear-gradient(to bottom, #ff7b9c, #ff477e);
+            border-radius: 3px;
+            position: relative;
+        }
+        .flame {
+            position: absolute;
+            top: -12px; left: 50%;
+            transform: translateX(-50%);
+            width: 10px; height: 14px;
+            background: #ffbc00;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 12px #ffbc00, 0 0 20px #ff7b00;
+            animation: flicker 0.6s infinite alternate;
+            transition: opacity 0.4s ease;
+        }
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+            100% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ffd700, #ff9000);
+            color: #000;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+        .btn:active { transform: scale(0.96); }
+
+        /* Contenido del paso 2 */
+        .card-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            text-align: left;
+        }
+        .card-content.show {
+            display: block;
+            opacity: 1;
+        }
+        .letter-p {
+            font-size: 13.5px;
+            color: #e0e0ed;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        /* Tarjetas de deseos */
+        .wishes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 18px;
+        }
+        .wish-box {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 12px;
+            padding: 12px 5px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 11px;
+            color: #ccc;
+            transition: all 0.3s ease;
+        }
+        .wish-box .icon { font-size: 18px; display: block; margin-bottom: 4px; }
+        .wish-box.open {
+            background: rgba(255, 215, 0, 0.18);
+            border-color: #ffd700;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Modulo donde aparece el texto revelado */
+        #wishText {
+            display: none;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #ffffff;
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 14px;
+            padding: 14px 16px;
+            line-height: 1.6;
+            text-align: left;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <div class="bg-glow"></div>
-    <div class="card">
-        <div class="flower" onclick="toggleMsg()">🌻</div>
-        <div class="title">Un Detalle para Ti</div>
-        <div class="subtitle">21 de Septiembre</div>
-        <button class="btn" id="btn" onclick="toggleMsg()">Ver mensaje ✉️</button>
-        
-        <div class="letter" id="msg">
-            <p style="margin-bottom: 10px;">Sé muy bien lo que platicamos y respeto mucho tu espacio.</p>
-            <p style="margin-bottom: 10px;">Aun así, no quería dejar pasar este día sin enviarte un pequeño detalle de flores amarillas para sacarte una sonrisa.</p>
-            <p><strong>Sin presiones ni compromisos. Que tengas un bonito día. ✨</strong></p>
+
+    <canvas id="fwCanvas"></canvas>
+
+    <div class="container" id="mainContainer">
+        <!-- PASO 1: PASTEL -->
+        <div id="step1">
+            <div class="title">¡Feliz Cumpleaños! 🎉</div>
+            <div class="subtitle">Alguien preparó un detalle especial para ti</div>
+            
+            <div class="cake-container" onclick="blowCandles()">
+                <div class="cake">
+                    <div class="candles">
+                        <div class="candle"><div class="flame"></div></div>
+                        <div class="candle"><div class="flame"></div></div>
+                        <div class="candle"><div class="flame"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size: 12px; color: #ffd700; margin-bottom: 15px; font-weight: 500;">👇 Toca el pastel para pedir tu deseo</p>
+            <button class="btn" onclick="blowCandles()">Soplar las velas 🕯️</button>
+        </div>
+
+        <!-- PASO 2: MENSAJE Y TARJETAS -->
+        <div class="card-content" id="step2">
+            <div class="title" style="text-align: center; margin-bottom: 15px;">✨ ¡Deseo Concedido! ✨</div>
+            
+            <p class="letter-p">¡Muchas felicidades en tu día! 🎉</p>
+            <p class="letter-p">Deseo de corazón que este nuevo año de vida esté lleno de momentos increíbles, éxitos, salud y todas las razones del mundo para sonreír.</p>
+            <p class="letter-p">Espero que disfrutes muchísimo tu día rodeada de la gente que quieres. ¡Te mereces lo mejor hoy y siempre! ✨</p>
+
+            <div style="font-size: 12px; color: #ffd700; margin-top: 18px; font-weight: 600; text-align: center;">Toca cada tarjeta para descubrir los mensajes:</div>
+            
+            <div class="wishes-grid">
+                <div class="wish-box" onclick="revealWish(this, '<b>Éxito & Proyectos:</b><br>Que este año logres todo lo que te propongas y que nunca te falten razones para sentirte orgullosa de ti.')">
+                    <span class="icon">🎁</span>
+                    <span class="label">Deseo 1</span>
+                </div>
+                <div class="wish-box" onclick="revealWish(this, '<b>Momentos Inolvidables:</b><br>Que tu camino esté lleno de viajes, sonrisas, paz y recuerdos muy bonitos.')">
+                    <span class="icon">🌟</span>
+                    <span class="label">Deseo 2</span>
+                </div>
+                <div class="wish-box" onclick="revealWish(this, '<b>Algo sincero para ti:</b><br>Sé que tal vez en este momento tu interés o tu atención están en otra persona y lo respeto totalmente. Sin embargo, no quería quedarme con las ganas de ser transparente contigo: me gustas mucho y ojalá en algún momento me des la oportunidad de demostrarte la gran persona que puedo ser a tu lado. Sin presiones, solo quería que lo supieras. ¡Disfruta mucho tu día! 🤍')">
+                    <span class="icon">🤍</span>
+                    <span class="label">Para ti</span>
+                </div>
+            </div>
+
+            <div id="wishText"></div>
         </div>
     </div>
 
     <script>
-        function toggleMsg() {
-            var m = document.getElementById('msg');
-            var b = document.getElementById('btn');
-            if (m.classList.contains('show')) {
-                m.classList.remove('show');
-                b.innerText = 'Ver mensaje ✉️';
-            } else {
-                m.classList.add('show');
-                b.innerText = 'Cerrar ❌';
+        let candlesBlown = false;
+
+        function blowCandles() {
+            if (candlesBlown) return;
+            candlesBlown = true;
+
+            // Apagar llamas
+            const flames = document.querySelectorAll('.flame');
+            flames.forEach(f => f.style.opacity = '0');
+
+            // Iniciar Fuegos Artificiales
+            startFireworks();
+
+            // Transición a la carta
+            setTimeout(() => {
+                document.getElementById('step1').style.display = 'none';
+                const step2 = document.getElementById('step2');
+                step2.classList.add('show');
+            }, 1000);
+        }
+
+        function revealWish(el, htmlContent) {
+            document.querySelectorAll('.wish-box').forEach(b => b.classList.remove('open'));
+            el.classList.add('open');
+            
+            const wishText = document.getElementById('wishText');
+            wishText.style.display = 'block';
+            wishText.innerHTML = htmlContent;
+        }
+
+        // Motor de Fuegos Artificiales
+        const canvas = document.getElementById('fwCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function createFirework(x, y) {
+            const colors = ['#ffd700', '#ff477e', '#00f0ff', '#ffffff', '#ff9000'];
+            for (let i = 0; i < 45; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 5 + 2;
+                particles.push({
+                    x: x, y: y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: 1,
+                    decay: Math.random() * 0.02 + 0.012
+                });
             }
         }
 
-        // Lluvia suave de chispas
-        for (let i = 0; i < 15; i++) {
-            let p = document.createElement('div');
-            p.className = 'petal';
-            p.innerText = '✨';
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            p.style.animationDelay = Math.random() * 2 + 's';
-            document.body.appendChild(p);
+        function startFireworks() {
+            let count = 0;
+            const interval = setInterval(() => {
+                const rx = Math.random() * canvas.width * 0.8 + canvas.width * 0.1;
+                const ry = Math.random() * canvas.height * 0.5 + canvas.height * 0.1;
+                createFirework(rx, ry);
+                count++;
+                if (count > 14) clearInterval(interval);
+            }, 280);
+
+            animate();
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(11, 10, 16, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= p.decay;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = Math.max(p.alpha, 0);
+                ctx.fill();
+
+                if (p.alpha <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+
+            if (particles.length > 0) {
+                requestAnimationFrame(animate);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
         }
     </script>
 </body>
