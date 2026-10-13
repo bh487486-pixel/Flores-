@@ -487,12 +487,12 @@
           <a href="#" target="_blank" class="gift-card-link">🛍️ Liverpool</a>
         </div>
 
-        <!-- CONFIRMACIÓN POR WHATSAPP -->
-        <h3 class="section-title">Confirmación de Asistencia</h3>
+        <!-- CONFIRMACIÓN POR WHATSAPP (DIRIGIDO A LA MAMÁ) -->
+        <h3 class="section-title">Confirmar Asistencia</h3>
         <div class="rsvp-box">
           <div class="field-group">
             <label for="input-name">Nombre Completo del Invitado:</label>
-            <input type="text" id="input-name" class="custom-input" placeholder="Ej. Juan Pérez" />
+            <input type="text" id="input-name" class="custom-input" placeholder="Ej. María López" />
           </div>
 
           <div class="field-group">
@@ -504,9 +504,9 @@
             </select>
           </div>
 
-          <!-- NÚMERO DE WHATSAPP CONFIGURADO: 5521186638 -->
+          <!-- NÚMERO DE LA MAMÁ CONFIGURADO: 5521186638 -->
           <button class="btn-whatsapp" onclick="sendWhatsApp('525521186638')">
-            📲 Confirmar Asistencia vía WhatsApp
+            📲 Confirmar Asistencia con Mamá vía WhatsApp
           </button>
         </div>
 
@@ -586,7 +586,8 @@
         return;
       }
 
-      const message = `¡Hola! Confirmo mi asistencia al Baby Shower 💙%0A%0A👤 *Nombre:* ${encodeURIComponent(name)}%0A🎟️ *Pases:* ${encodeURIComponent(count)}%0A¡Nos vemos en la celebración!`;
+      // Mensaje redactado en primera persona para la mamá:
+      const message = `¡Hola! Quiero confirmar mi asistencia a tu Baby Shower 💙%0A%0A👤 *Nombre:* ${encodeURIComponent(name)}%0A🎟️ *Pases:* ${encodeURIComponent(count)}%0A¡Muchas felicidades y ahí nos vemos!`;
       
       window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
     }
