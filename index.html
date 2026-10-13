@@ -1,422 +1,242 @@
-<!DOCTYPE html>
+<!DOCTYPE1 html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operación Bandera de Paz 🕊️💖</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background: linear-gradient(135deg, #ffdee9 0%, #b5fffc 100%);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            color: #4a4a4a;
-            overflow-x: hidden;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Revelación y Baby Shower!</title>
+  
+  <!-- Fuente elegante e infantil -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Librería de Confeti para la sorpresa -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        #confettiCanvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 100;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            width: 100%;
-            max-width: 400px;
-            padding: 24px 20px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #0c4a6e;
+    }
 
-        .badge {
-            display: inline-block;
-            background: #ffe3ec;
-            color: #ff477e;
-            font-weight: 700;
-            font-size: 11px;
-            padding: 5px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
+    .card {
+      background: #ffffff;
+      max-width: 480px;
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-        h1 {
-            font-size: 22px;
-            color: #2b2b2b;
-            margin-bottom: 8px;
-        }
+    /* ESTILOS DE LA REVELACIÓN DE GÉNERO */
+    #reveal-screen h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem;
+      color: #0284c7;
+      margin-bottom: 15px;
+    }
 
-        p.desc {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
+    #reveal-screen p {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      color: #334155;
+    }
 
-        /* Medidor de Enojo */
-        .meter-box {
-            background: #f0f0f5;
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        .meter-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #555;
-        }
-        .progress-bar-bg {
-            background: #e0e0e0;
-            height: 16px;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(90deg, #ff4d4d, #ff8533);
-            border-radius: 10px;
-            transition: width 0.5s ease, background 0.5s ease;
-        }
+    .reveal-btn {
+      background: linear-gradient(135deg, #38bdf8, #0284c7);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 15px -3px rgba(2, 132, 199, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
 
-        /* Acciones / Botones */
-        .actions-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .btn-action {
-            background: #ffffff;
-            border: 1px solid #ffd1dc;
-            padding: 12px 15px;
-            border-radius: 14px;
-            font-size: 13px;
-            color: #444;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-        }
-        .btn-action:active {
-            transform: scale(0.98);
-        }
-        .btn-action.done {
-            background: #e8f5e9;
-            border-color: #a5d6a7;
-            color: #2e7d32;
-            cursor: default;
-            opacity: 0.8;
-        }
+    .reveal-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 20px -3px rgba(2, 132, 199, 0.5);
+    }
 
-        /* Sobre de carta */
-        .envelope-container {
-            background: #fff0f5;
-            border: 2px dashed #ffb6c1;
-            border-radius: 16px;
-            padding: 15px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: transform 0.2s ease;
-        }
-        .envelope-container:active {
-            transform: scale(0.98);
-        }
+    /* ESTILOS DE LA INVITACIÓN (OCULTA AL INICIO) */
+    #invitation-screen {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+    }
 
-        /* Modal de Carta */
-        .letter-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .letter-modal.active {
-            display: flex;
-        }
-        .letter-body {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 25px;
-            max-width: 360px;
-            width: 100%;
-            text-align: left;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: popup 0.3s ease;
-        }
-        @keyframes popup {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .letter-body h3 {
-            color: #ff477e;
-            font-size: 18px;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .letter-body p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #444;
-            margin-bottom: 15px;
-        }
-        .btn-close-modal {
-            background: #ff477e;
-            color: #fff;
-            border: none;
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 14px;
-            margin-top: 5px;
-            cursor: pointer;
-        }
+    .gender-badge {
+      display: inline-block;
+      background-color: #e0f2fe;
+      color: #0369a1;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      padding: 8px 20px;
+      border-radius: 30px;
+      margin-bottom: 15px;
+      border: 2px dashed #38bdf8;
+    }
 
-        /* Botón Final de Paz */
-        .btn-peace {
-            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-            color: #fff;
-            border: none;
-            width: 100%;
-            padding: 15px;
-            border-radius: 30px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 117, 140, 0.4);
-            transition: all 0.3s ease;
-        }
-        .btn-peace:disabled {
-            background: #ccc;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
+    .invitation-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.2rem;
+      color: #0284c7;
+      margin-bottom: 10px;
+    }
 
-        .success-box {
-            display: none;
-            background: #e8f5e9;
-            border: 1px solid #a5d6a7;
-            border-radius: 16px;
-            padding: 20px;
-            color: #2e7d32;
-            margin-top: 15px;
-            animation: popup 0.4s ease;
-        }
-    </style>
+    .baby-name {
+      font-size: 1.3rem;
+      color: #475569;
+      margin-bottom: 25px;
+    }
+
+    .details-box {
+      background-color: #f0f9ff;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .detail-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .icon {
+      font-size: 1.4rem;
+      margin-right: 12px;
+      width: 30px;
+      text-align: center;
+    }
+
+    .confirm-btn {
+      display: inline-block;
+      width: 100%;
+      background-color: #22c55e;
+      color: white;
+      text-decoration: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      padding: 14px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.3);
+      transition: background-color 0.2s;
+    }
+
+    .confirm-btn:hover {
+      background-color: #16a34a;
+    }
+  </style>
 </head>
 <body>
 
-    <canvas id="confettiCanvas"></canvas>
-
-    <div class="card">
-        <span class="badge">Operación Reconciliación 🕊</span>
-        <h1>¿Seguimos enojados? 🥺</h1>
-        <p class="desc">Por favor toca los botones de abajo para bajar el nivel de molestia poco a poco.</p>
-
-        <!-- Enojómetro -->
-        <div class="meter-box">
-            <div class="meter-label">
-                <span>Nivel de molestia:</span>
-                <span id="meterText" style="color: #ff4d4d;">100% (Furia Total 😡)</span>
-            </div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="meterFill"></div>
-            </div>
-        </div>
-
-        <!-- Acciones -->
-        <div class="actions-grid">
-            <button class="btn-action" onclick="reduceAnger(this, 35, 'Acepto 100% mi responsabilidad 🙇‍♂️')">
-                <span>🙇‍♂️ Admitir que me equivoqué</span>
-                <b>-35%</b>
-            </button>
-            <button class="btn-action" onclick="reduceAnger(this, 35, 'Vale por tu postre/comida favorita 🍰')">
-                <span>🍰 Oferta de postre o comida</span>
-                <b>-35%</b>
-            </button>
-            <button class="btn-action" onclick="reduceAnger(this, 30, 'Promesa oficial de cero dramas 🤝')">
-                <span>🤝 Promesa de paz y buena vibra</span>
-                <b>-30%</b>
-            </button>
-        </div>
-
-        <!-- Carta Secreta -->
-        <div class="envelope-container" onclick="openLetter()">
-            <span style="font-size: 24px; display: block; margin-bottom: 4px;">✉️</span>
-            <span style="font-size: 13px; font-weight: 700; color: #ff477e;">Toca aquí para leer una carta sincera</span>
-        </div>
-
-        <!-- Botón de Firmeza -->
-        <button class="btn-peace" id="btnPeace" disabled onclick="signPeace()">
-            Desbloquea el 0% para firmar la paz 🕊️
-        </button>
-
-        <!-- Mensaje de Éxito -->
-        <div class="success-box" id="successBox">
-            <h3 style="font-size: 18px; margin-bottom: 8px;">¡Tratado de Paz Firmado! 🎉💖</h3>
-            <p style="font-size: 13px; line-height: 1.5; color: #388e3c;">
-                ¡Gracias por escucharme Kattcita! Prometo recompensarte con momentos bonitos y cero malentendidos. ✨
-            </p>
-        </div>
+  <div class="card">
+    
+    <!-- PASO 1: PANTALLA DE REVELACIÓN -->
+    <div id="reveal-screen">
+      <div style="font-size: 4rem; margin-bottom: 15px;">🎁</div>
+      <h1>¡Tenemos un anuncio especial!</h1>
+      <p>Haz clic en el botón para descubrir el género del bebé:</p>
+      <button class="reveal-btn" onclick="revealGender()">✨ ¡Descubrir Género! ✨</button>
     </div>
 
-    <!-- Modal Carta -->
-    <div class="letter-modal" id="letterModal">
-        <div class="letter-body">
-            <h3>Una nota para ti 💌</h3>
-            <p>Perdon kattcita ya se que la cague prometo no volverlo a hacer ya ponte feliz conmigo ¿si? Tu sabes perfectamente que estando feliz o enojada te vez muy linda ehh pa no decir sexy jsjsjs</p>
-            <button class="btn-close-modal" onclick="closeLetter()">Entendido ✨</button>
+    <!-- PASO 2: PANTALLA DE INVITACIÓN (OCULTA) -->
+    <div id="invitation-screen">
+      <div class="gender-badge">👦 ¡Es un Varón! 💙</div>
+      <h1 class="invitation-title">Baby Shower</h1>
+      <p class="baby-name">Acompáñanos a celebrar la llegada de nuestro niño</p>
+
+      <!-- DETALLES DEL EVENTO (Personaliza estos datos) -->
+      <div class="details-box">
+        <div class="detail-item">
+          <span class="icon">📅</span>
+          <div><strong>Fecha:</strong> Sábado, 15 de Noviembre</div>
         </div>
+        <div class="detail-item">
+          <span class="icon">⏰</span>
+          <div><strong>Hora:</strong> 4:00 PM</div>
+        </div>
+        <div class="detail-item">
+          <span class="icon">📍</span>
+          <div><strong>Lugar:</strong> Salón de Eventos "El Recreo"</div>
+        </div>
+        <div class="detail-item">
+          <span class="icon">🏡</span>
+          <div><strong>Dirección:</strong> Av. Principal #123, Ciudad</div>
+        </div>
+      </div>
+
+      <!-- BOTÓN DE CONFIRMACIÓN A WHATSAPP -->
+      <a href="https://wa.me/1234567890?text=¡Hola!%20Confirmo%20mi%20asistencia%20al%20Baby%20Shower%20💙" 
+         target="_blank" 
+         class="confirm-btn">
+         📲 Confirmar Asistencia por WhatsApp
+      </a>
     </div>
 
-    <script>
-        let angerLevel = 100;
+  </div>
 
-        function playSound(freq, duration) {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + duration);
-            } catch(e) {}
-        }
+  <script>
+    function revealGender() {
+      // 1. Ocultar pantalla de revelación
+      document.getElementById('reveal-screen').style.display = 'none';
+      
+      // 2. Mostrar pantalla de invitación con animación
+      const invScreen = document.getElementById('invitation-screen');
+      invScreen.style.display = 'block';
+      setTimeout(() => {
+        invScreen.style.opacity = '1';
+      }, 50);
 
-        function reduceAnger(btn, amount, text) {
-            if (btn.classList.contains('done')) return;
+      // 3. Lluvia de confeti de colores azul y blanco
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#38bdf8', '#0284c7', '#ffffff', '#bae6fd']
+      });
 
-            btn.classList.add('done');
-            btn.querySelector('span').innerText = '✅ ' + text;
-            
-            angerLevel = Math.max(0, angerLevel - amount);
-            updateMeter();
-            playSound(520, 0.2);
-        }
+      // Segunda ráfaga de confeti para más emoción
+      setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#38bdf8', '#0284c7', '#ffffff']
+        });
+        confetti({
+          particleCount: 100,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#38bdf8', '#0284c7', '#ffffff']
+        });
+      }, 300);
+    }
+  </script>
 
-        function updateMeter() {
-            const fill = document.getElementById('meterFill');
-            const text = document.getElementById('meterText');
-            const btnPeace = document.getElementById('btnPeace');
-
-            fill.style.width = angerLevel + '%';
-
-            if (angerLevel > 60) {
-                text.innerText = angerLevel + '% (Furia Total 😡)';
-                text.style.color = '#ff4d4d';
-                fill.style.background = 'linear-gradient(90deg, #ff4d4d, #ff8533)';
-            } else if (angerLevel > 0) {
-                text.innerText = angerLevel + '% (Pensándolo... 🤔)';
-                text.style.color = '#ff9800';
-                fill.style.background = 'linear-gradient(90deg, #ff9800, #ffeb3b)';
-            } else {
-                text.innerText = '0% (¡Paz garantizada! ✨)';
-                text.style.color = '#4caf50';
-                fill.style.background = 'linear-gradient(90deg, #4caf50, #8bc34a)';
-                
-                btnPeace.disabled = false;
-                btnPeace.innerText = '¡Firmar la Paz Ahora! 🕊️💖';
-                btnPeace.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
-            }
-        }
-
-        function openLetter() {
-            document.getElementById('letterModal').classList.add('active');
-            playSound(600, 0.25);
-        }
-
-        function closeLetter() {
-            document.getElementById('letterModal').classList.remove('active');
-        }
-
-        function signPeace() {
-            document.getElementById('btnPeace').style.display = 'none';
-            document.getElementById('successBox').style.display = 'block';
-            startHeartsAndConfetti();
-            playSound(800, 0.4);
-        }
-
-        // Efecto de Confeti y Corazones
-        const canvas = document.getElementById('confettiCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        function startHeartsAndConfetti() {
-            const colors = ['#ff477e', '#ff7eb3', '#ffd1dc', '#4caf50', '#ffeb3b'];
-            for (let i = 0; i < 80; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: -20,
-                    size: Math.random() * 8 + 4,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    vy: Math.random() * 3 + 2,
-                    vx: Math.random() * 2 - 1,
-                    alpha: 1
-                });
-            }
-            animateConfetti();
-        }
-
-        function animateConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach((p, index) => {
-                p.y += p.vy;
-                p.x += p.vx;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = p.color;
-                ctx.fill();
-
-                if (p.y > canvas.height) {
-                    particles.splice(index, 1);
-                }
-            });
-
-            if (particles.length > 0) {
-                requestAnimationFrame(animateConfetti);
-            }
-        }
-    </script>
 </body>
 </html>
