@@ -3,496 +3,510 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>¡Una Gran Sorpresa te Espera! 🎉</title>
+  <title>Una Gran Sorpresa Te Espera ✨</title>
   
-  <!-- Fuentes Elegantes -->
+  <!-- Fuentes Google Premium -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
   
-  <!-- Canvas Confetti Library -->
+  <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
+    /* VARIABLES INICIALES: ESTILO NOCTURNO Y ELEGANTE (Efecto Misterio) */
     :root {
-      /* Paleta Neutra Inicial (Misterio / Neutro) */
-      --bg-gradient: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fef08a 100%);
-      --accent-color: #d97706;
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --gold-accent: #f59e0b;
-      --boy-blue-dark: #0284c7;
-      --boy-blue-light: #e0f2fe;
+      --bg-body: #0b0f19;
+      --card-bg: #151c2c;
+      --card-border: #2a364f;
+      --primary-accent: #f59e0b; /* Dorado */
+      --text-title: #f8fafc;
+      --text-body: #94a3b8;
+      --shadow-color: rgba(0, 0, 0, 0.5);
+      --badge-bg: rgba(245, 158, 11, 0.1);
+      --badge-text: #fbbf24;
     }
 
-    /* Cambio Dinámico a Azul al Revelar */
-    body.revealed-theme {
-      --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
-      --accent-color: #0284c7;
-      --text-main: #0c4a6e;
+    /* CAMBIO RADICAL A AZUL BEBÉ / LUZ AL REVELAR */
+    body.revealed {
+      --bg-body: #e0f2fe;
+      --card-bg: #ffffff;
+      --card-border: #bae6fd;
+      --primary-accent: #0284c7; /* Azul Rey / Bebé */
+      --text-title: #0c4a6e;
+      --text-body: #334155;
+      --shadow-color: rgba(2, 132, 199, 0.15);
+      --badge-bg: #e0f2fe;
+      --badge-text: #0369a1;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      transition: background 1s ease, color 0.5s ease;
+      transition: background-color 0.8s ease, color 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
-      background: var(--bg-gradient);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-body);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      color: var(--text-main);
+      color: var(--text-body);
     }
 
-    .container {
+    .invitation-wrapper {
       width: 100%;
-      max-width: 550px;
+      max-width: 580px;
     }
 
-    /* TARJETA PRINCIPAL */
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border-radius: 32px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-      padding: 40px 28px;
+    /* TARJETA CONTENEDORA PRINCIPAL */
+    .main-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 36px;
+      padding: 42px 28px;
+      box-shadow: 0 25px 50px -12px var(--shadow-color);
       text-align: center;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.6);
     }
 
-    /* PANTALLA DE MISTERIO */
-    #mystery-screen {
+    /* FASE 1: MISTERIO */
+    #mystery-section {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 20px 10px;
     }
 
-    .mystery-box {
-      width: 110px;
-      height: 110px;
-      background: linear-gradient(135deg, #fbbf24, #d97706);
-      border-radius: 28px;
+    .orb-container {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin-bottom: 30px;
+    }
+
+    .orb {
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 30%, #fbbf24, #d97706, #78350f);
+      border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 3.5rem;
       color: white;
-      margin-bottom: 24px;
-      box-shadow: 0 15px 25px -5px rgba(217, 119, 6, 0.4);
-      animation: pulse-glow 2s infinite alternate;
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
+      animation: rotateOrb 6s infinite linear;
     }
 
-    @keyframes pulse-glow {
-      0% { transform: scale(1); box-shadow: 0 15px 25px -5px rgba(217, 119, 6, 0.4); }
-      100% { transform: scale(1.08); box-shadow: 0 20px 35px -5px rgba(217, 119, 6, 0.6); }
+    @keyframes rotateOrb {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.05); }
+      100% { transform: rotate(360deg) scale(1); }
     }
 
-    .mystery-title {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 2.1rem;
-      color: #78350f;
-      margin-bottom: 12px;
-      line-height: 1.2;
+    .mystery-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      color: var(--text-title);
+      margin-bottom: 14px;
+      letter-spacing: 1px;
     }
 
-    .mystery-desc {
+    .mystery-subtext {
       font-size: 1.05rem;
-      color: #92400e;
-      margin-bottom: 32px;
-      line-height: 1.5;
+      line-height: 1.6;
+      color: var(--text-body);
+      margin-bottom: 36px;
     }
 
-    .btn-reveal {
+    .btn-mystery {
       background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: white;
+      color: #ffffff;
       font-family: 'Fredoka', sans-serif;
       font-size: 1.3rem;
-      padding: 18px 36px;
+      padding: 20px 40px;
       border: none;
-      border-radius: 50px;
+      border-radius: 60px;
       cursor: pointer;
-      box-shadow: 0 12px 20px -5px rgba(217, 119, 6, 0.5);
-      transition: all 0.3s ease;
       width: 100%;
+      box-shadow: 0 15px 30px rgba(217, 119, 6, 0.35);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .btn-reveal:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 18px 28px -5px rgba(217, 119, 6, 0.6);
+    .btn-mystery:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 20px 35px rgba(217, 119, 6, 0.5);
     }
 
-    /* INVITACIÓN PRINCIPAL (OCULTA INICIALMENTE) */
-    #invitation-screen {
+    /* FASE 2: CONTENIDO DE LA INVITACIÓN (OCULTO AL INICIO) */
+    #content-section {
       display: none;
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(40px);
+      transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    #invitation-screen.active {
+    #content-section.visible {
       display: block;
       opacity: 1;
       transform: translateY(0);
     }
 
-    .gender-banner {
-      background: linear-gradient(135deg, #0284c7, #0369a1);
-      color: white;
+    .badge-boy {
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
       font-family: 'Fredoka', sans-serif;
       font-size: 1.6rem;
-      padding: 12px 24px;
+      padding: 10px 28px;
       border-radius: 50px;
       display: inline-block;
       margin-bottom: 20px;
-      box-shadow: 0 10px 20px rgba(2, 132, 199, 0.3);
-      animation: bounce 1s ease;
+      border: 2px dashed #38bdf8;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-      40% {transform: translateY(-15px);}
-      60% {transform: translateY(-7px);}
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
-    .main-title {
+    .hero-title {
       font-family: 'Fredoka', sans-serif;
-      font-size: 2.6rem;
-      color: #0369a1;
-      margin-bottom: 6px;
+      font-size: 2.8rem;
+      color: var(--text-title);
+      margin-bottom: 8px;
     }
 
-    .sub-title {
+    .hero-subtitle {
       font-size: 1.15rem;
-      color: #0284c7;
-      font-weight: 500;
-      margin-bottom: 28px;
-    }
-
-    /* DÍAS Y CUENTA REGRESIVA */
-    .countdown-container {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
+      color: var(--primary-accent);
+      font-weight: 600;
       margin-bottom: 30px;
     }
 
-    .count-box {
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
-      border-radius: 16px;
-      padding: 12px;
-      min-width: 75px;
+    /* RELOJ REGRESIVO */
+    .timer-grid {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
     }
 
-    .count-num {
+    .timer-unit {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 18px;
+      padding: 14px 10px;
+      min-width: 80px;
+    }
+
+    .timer-value {
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       color: #0284c7;
     }
 
-    .count-label {
+    .timer-label {
       font-size: 0.75rem;
       color: #64748b;
+      font-weight: 700;
       text-transform: uppercase;
-      font-weight: 600;
     }
 
-    /* TARJETAS DETALLE */
-    .info-card {
+    /* TARJETAS CON DETALLES */
+    .detail-card {
       background: #ffffff;
-      border-radius: 20px;
-      padding: 20px;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      padding: 22px;
       margin-bottom: 16px;
       text-align: left;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     }
 
-    .info-icon {
-      width: 50px;
-      height: 50px;
-      background: #e0f2fe;
-      border-radius: 14px;
+    .detail-icon-bg {
+      width: 56px;
+      height: 56px;
+      background-color: #e0f2fe;
+      border-radius: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.5rem;
-      color: #0284c7;
+      font-size: 1.6rem;
       flex-shrink: 0;
     }
 
-    .info-content h3 {
-      font-size: 0.85rem;
+    .detail-text h4 {
+      font-size: 0.8rem;
       color: #64748b;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
+      letter-spacing: 0.8px;
+      margin-bottom: 3px;
     }
 
-    .info-content p {
+    .detail-text p {
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 700;
       color: #0f172a;
     }
 
+    /* BOTÓN MAPA */
+    .map-link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: #0284c7;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 16px;
+      border-radius: 16px;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 16px rgba(2, 132, 199, 0.25);
+    }
+
     /* ITINERARIO */
-    .section-header {
+    .section-title {
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.4rem;
-      color: #0369a1;
-      margin: 28px 0 16px 0;
+      font-size: 1.5rem;
+      color: var(--text-title);
+      margin: 32px 0 18px 0;
       text-align: left;
     }
 
-    .timeline {
-      position: relative;
+    .itinerary-list {
+      border-left: 3px solid #7dd3fc;
       padding-left: 20px;
-      border-left: 2px dashed #38bdf8;
       text-align: left;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
-    .timeline-item {
+    .itinerary-step {
+      margin-bottom: 20px;
       position: relative;
-      padding-bottom: 16px;
-      padding-left: 15px;
     }
 
-    .timeline-item::before {
+    .itinerary-step::before {
       content: '';
       position: absolute;
-      left: -26px;
-      top: 2px;
-      width: 10px;
-      height: 10px;
+      left: -27px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      background-color: #0284c7;
       border-radius: 50%;
-      background: #0284c7;
       border: 3px solid #ffffff;
     }
 
-    .timeline-time {
-      font-weight: 700;
+    .step-time {
+      font-weight: 800;
       color: #0284c7;
-      font-size: 0.9rem;
-    }
-
-    .timeline-desc {
       font-size: 0.95rem;
-      color: #334155;
     }
 
-    /* MESAS DE REGALOS */
-    .gift-grid {
+    .step-desc {
+      color: #334155;
+      font-size: 1rem;
+    }
+
+    /* MESAS DE REGALO */
+    .gifts-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 28px;
+      gap: 14px;
+      margin-bottom: 32px;
     }
 
-    .gift-btn {
+    .gift-card-link {
       background: #f8fafc;
       border: 1px solid #cbd5e1;
-      border-radius: 14px;
-      padding: 12px;
-      color: #334155;
+      padding: 16px;
+      border-radius: 16px;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
+      color: #1e293b;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: all 0.2s;
     }
 
-    .gift-btn:hover {
-      background: #e0f2fe;
-      border-color: #38bdf8;
-      color: #0284c7;
-    }
-
-    /* FORMULARIO DE CONFIRMACIÓN */
-    .rsvp-form {
+    /* FORMULARIO RSVP */
+    .rsvp-box {
       background: #f8fafc;
-      border-radius: 20px;
-      padding: 20px;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      padding: 24px;
       text-align: left;
-      margin-bottom: 20px;
     }
 
-    .form-group {
-      margin-bottom: 14px;
+    .field-group {
+      margin-bottom: 16px;
     }
 
-    .form-group label {
+    .field-group label {
       display: block;
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 700;
       color: #475569;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
-    .form-input {
+    .custom-input {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       border: 1px solid #cbd5e1;
-      border-radius: 10px;
+      border-radius: 12px;
       font-family: inherit;
-      font-size: 0.95rem;
-      outline: none;
+      font-size: 1rem;
+      background: white;
     }
 
-    .form-input:focus {
-      border-color: #0284c7;
-      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
-    }
-
-    .btn-submit {
-      background: linear-gradient(135deg, #10b981, #059669);
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
       color: white;
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.15rem;
-      padding: 16px;
+      font-size: 1.2rem;
+      padding: 18px;
       border: none;
-      border-radius: 14px;
+      border-radius: 16px;
       cursor: pointer;
       width: 100%;
-      box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
-      transition: all 0.2s;
-    }
-
-    .btn-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 20px -3px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="card">
+  <div class="invitation-wrapper">
+    <div class="main-card">
 
-      <!-- FASE 1: PANTALLA MISTERIO (COLORES NEUTROS / DORADOS) -->
-      <div id="mystery-screen">
-        <div class="mystery-box">❓</div>
-        <h1 class="mystery-title">¿Qué Será?</h1>
-        <p class="mystery-desc">Estamos muy felices de compartir este momento especial con ustedes. ¡Toca el botón para descubrir la gran noticia!</p>
-        <button class="btn-reveal" onclick="triggerReveal()">✨ Revelar la Sorpresa ✨</button>
+      <!-- FASE 1: PANTALLA MISTERIO Y REVELACIÓN -->
+      <div id="mystery-section">
+        <div class="orb-container">
+          <div class="orb">✨</div>
+        </div>
+        <h1 class="mystery-heading">Una Gran Noticia</h1>
+        <p class="mystery-subtext">
+          Hay momentos en la vida que cambian todo para siempre. Te invitamos a descubrir el regalo más especial que viene en camino.
+        </p>
+        <button class="btn-mystery" onclick="revealSurprise()">
+          💙 Toca Para Descubrir El Género 💖
+        </button>
       </div>
 
-      <!-- FASE 2: INVITACIÓN COMPLETA (COLOR AZUL REVELADO) -->
-      <div id="invitation-screen">
+      <!-- FASE 2: INVITACIÓN FINAL COMPLETA -->
+      <div id="content-section">
         
-        <div class="gender-banner">👦 ¡ES UN NIÑO! 💙</div>
-        <h1 class="main-title">Baby Shower</h1>
-        <p class="sub-title">Te invitamos a celebrar la llegada de nuestro príncipe</p>
+        <div class="badge-boy">👦 ¡ES UN VARÓN! 💙</div>
+        <h1 class="hero-title">Baby Shower</h1>
+        <p class="hero-subtitle">Acompáñanos a celebrar la llegada de nuestro niño</p>
 
-        <!-- CUENTA REGRESIVA -->
-        <div class="countdown-container">
-          <div class="count-box">
-            <div class="count-num" id="days">00</div>
-            <div class="count-label">Días</div>
+        <!-- CONTADOR DE TIEMPO -->
+        <div class="timer-grid">
+          <div class="timer-unit">
+            <div class="timer-value" id="count-d">00</div>
+            <div class="timer-label">Días</div>
           </div>
-          <div class="count-box">
-            <div class="count-num" id="hours">00</div>
-            <div class="count-label">Horas</div>
+          <div class="timer-unit">
+            <div class="timer-value" id="count-h">00</div>
+            <div class="timer-label">Horas</div>
           </div>
-          <div class="count-box">
-            <div class="count-num" id="minutes">00</div>
-            <div class="count-label">Min</div>
+          <div class="timer-unit">
+            <div class="timer-value" id="count-m">00</div>
+            <div class="timer-label">Min</div>
           </div>
         </div>
 
-        <!-- TARJETAS DE INFORMACIÓN -->
-        <div class="info-card">
-          <div class="info-icon">📅</div>
-          <div class="info-content">
-            <h3>Fecha</h3>
-            <p>Sábado, 15 de Noviembre, 2026</p>
+        <!-- DETALLES DEL EVENTO -->
+        <div class="detail-card">
+          <div class="detail-icon-bg">📅</div>
+          <div class="detail-text">
+            <h4>Fecha del Evento</h4>
+            <p>Sábado, 28 de Noviembre, 2026</p>
           </div>
         </div>
 
-        <div class="info-card">
-          <div class="info-icon">⏰</div>
-          <div class="info-content">
-            <h3>Horario</h3>
-            <p>4:00 PM - 9:00 PM</p>
+        <div class="detail-card">
+          <div class="detail-icon-bg">⏰</div>
+          <div class="detail-text">
+            <h4>Horario</h4>
+            <p>4:00 PM</p>
           </div>
         </div>
 
-        <div class="info-card">
-          <div class="info-icon">📍</div>
-          <div class="info-content">
-            <h3>Lugar & Ubicación</h3>
-            <p>Salón de Eventos "El Recreo"</p>
-            <span style="font-size:0.85rem; color:#64748b;">Av. Principal #123, Toluca</span>
+        <div class="detail-card">
+          <div class="detail-icon-bg">📍</div>
+          <div class="detail-text">
+            <h4>Lugar del Evento</h4>
+            <p>Salón de Eventos "Jardín Real"</p>
           </div>
         </div>
 
-        <!-- BOTÓN GOOGLE MAPS -->
-        <a href="https://maps.google.com" target="_blank" class="gift-btn" style="margin-bottom:24px; background:#e0f2fe; border-color:#7dd3fc; color:#0369a1;">
-          🗺️ Ver Ubicación en Google Maps
+        <!-- LINK A MAPS -->
+        <a href="https://maps.google.com" target="_blank" class="map-link-btn">
+          📍 Abrir Ubicación en Google Maps
         </a>
 
-        <!-- ITINERARIO DEL EVENTO -->
-        <h2 class="section-header">Programación del Evento</h2>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-time">4:00 PM</div>
-            <div class="timeline-desc">Llegada y Recepción de Invitados</div>
+        <!-- ITINERARIO -->
+        <h3 class="section-title">Itinerario de Celebración</h3>
+        <div class="itinerary-list">
+          <div class="itinerary-step">
+            <div class="step-time">4:00 PM</div>
+            <div class="step-desc">Bienvenida y Recepción</div>
           </div>
-          <div class="timeline-item">
-            <div class="timeline-time">5:00 PM</div>
-            <div class="timeline-desc">Juegos y Dinámicas Divertidas</div>
+          <div class="itinerary-step">
+            <div class="step-time">5:00 PM</div>
+            <div class="step-desc">Juegos de Baby Shower & Dinámicas</div>
           </div>
-          <div class="timeline-item">
-            <div class="timeline-time">6:30 PM</div>
-            <div class="timeline-desc">Banquete y Merienda</div>
+          <div class="itinerary-step">
+            <div class="step-time">6:30 PM</div>
+            <div class="step-desc">Cena y Brindis</div>
           </div>
-          <div class="timeline-item">
-            <div class="timeline-time">7:30 PM</div>
-            <div class="timeline-desc">Agradecimientos y Pastel</div>
+          <div class="itinerary-step">
+            <div class="step-time">7:30 PM</div>
+            <div class="step-desc">Corte de Pastel y Agradecimiento</div>
           </div>
         </div>
 
-        <!-- MESAS DE REGALOS -->
-        <h2 class="section-header">Mesa de Regalos</h2>
-        <div class="gift-grid">
-          <a href="#" target="_blank" class="gift-btn">🎁 Amazon</a>
-          <a href="#" target="_blank" class="gift-btn">🛍️ Liverpool</a>
+        <!-- MESAS DE REGALO -->
+        <h3 class="section-title">Mesa de Regalos</h3>
+        <div class="gifts-row">
+          <a href="#" target="_blank" class="gift-card-link">🎁 Amazon</a>
+          <a href="#" target="_blank" class="gift-card-link">🛍️ Liverpool</a>
         </div>
 
-        <!-- FORMULARIO RSVP / WHATSAPP -->
-        <h2 class="section-header">Confirmar Asistencia</h2>
-        <div class="rsvp-form">
-          <div class="form-group">
-            <label for="guest-name">Tu Nombre Completo:</label>
-            <input type="text" id="guest-name" class="form-input" placeholder="Ej. Familia Pérez" />
+        <!-- CONFIRMACIÓN POR WHATSAPP -->
+        <h3 class="section-title">Confirmación de Asistencia</h3>
+        <div class="rsvp-box">
+          <div class="field-group">
+            <label for="input-name">Nombre Completo del Invitado:</label>
+            <input type="text" id="input-name" class="custom-input" placeholder="Ej. Juan Pérez" />
           </div>
-          <div class="form-group">
-            <label for="guest-count">Número de Asistentes:</label>
-            <select id="guest-count" class="form-input">
-              <option value="1 persona">1 persona</option>
-              <option value="2 personas">2 personas</option>
-              <option value="3 personas">3 personas</option>
-              <option value="Familia">Familia entera</option>
+
+          <div class="field-group">
+            <label for="input-count">Pases a Confirmar:</label>
+            <select id="input-count" class="custom-input">
+              <option value="1 persona">1 Pase (Individual)</option>
+              <option value="2 personas">2 Pases (Pareja)</option>
+              <option value="Familia completa">Pase Familiar</option>
             </select>
           </div>
-          <!-- CAMBIA EL NÚMERO 527200000000 POR TU WHATSAPP CON LADA -->
-          <button class="btn-submit" onclick="sendRSVP('527200000000')">
-            📲 Confirmar por WhatsApp
+
+          <!-- CAMBIA '527200000000' POR TU NÚMERO DE TELEFONO REAL CON LADA -->
+          <button class="btn-whatsapp" onclick="sendWhatsApp('527200000000')">
+            📲 Confirmar Asistencia vía WhatsApp
           </button>
         </div>
 
@@ -502,34 +516,34 @@
   </div>
 
   <script>
-    // FONT Y REVELACIÓN INTERACTIVA
-    function triggerReveal() {
-      // 1. Cambiar tema visual a Azul
-      document.body.classList.add('revealed-theme');
+    // FUNCIÓN DE REVELACIÓN Y CAMBIO TOTAL DE TEMA
+    function revealSurprise() {
+      // 1. Aplicar clase que cambia el diseño a Azul/Blanco
+      document.body.classList.add('revealed');
 
-      // 2. Transición de pantallas
-      document.getElementById('mystery-screen').style.display = 'none';
-      const inv = document.getElementById('invitation-screen');
-      inv.classList.add('active');
+      // 2. Ocultar pantalla oscura y mostrar la invitación
+      document.getElementById('mystery-section').style.display = 'none';
+      const content = document.getElementById('content-section');
+      content.classList.add('visible');
 
-      // 3. Explosión de Confeti Épica
-      const duration = 3 * 1000;
+      // 3. Lanzar confeti continuo por 3 segundos
+      const duration = 3.5 * 1000;
       const end = Date.now() + duration;
 
       (function frame() {
         confetti({
-          particleCount: 7,
+          particleCount: 8,
           angle: 60,
-          spread: 55,
+          spread: 60,
           origin: { x: 0 },
-          colors: ['#0284c7', '#38bdf8', '#ffffff', '#bae6fd']
+          colors: ['#0284c7', '#38bdf8', '#ffffff', '#bae6fd', '#cbd5e1']
         });
         confetti({
-          particleCount: 7,
+          particleCount: 8,
           angle: 120,
-          spread: 55,
+          spread: 60,
           origin: { x: 1 },
-          colors: ['#0284c7', '#38bdf8', '#ffffff', '#bae6fd']
+          colors: ['#0284c7', '#38bdf8', '#ffffff', '#bae6fd', '#cbd5e1']
         });
 
         if (Date.now() < end) {
@@ -537,50 +551,44 @@
         }
       })();
 
-      // Iniciar contador al revelar
-      startCountdown();
+      // Iniciar el reloj de cuenta regresiva
+      initTimer();
     }
 
-    // CUENTA REGRESIVA A LA FECHA
-    function startCountdown() {
-      // Ajusta la fecha del evento aquí (Año, Mes-1, Día, Hora, Minutos)
-      const eventDate = new Date(2026, 10, 15, 16, 0, 0).getTime();
+    // RELOJ REGRESIVO
+    function initTimer() {
+      // Configura la fecha aquí: (Año, Mes-1, Día, Hora, Minutos)
+      const eventDate = new Date(2026, 10, 28, 16, 0, 0).getTime();
 
-      const timer = setInterval(() => {
+      setInterval(() => {
         const now = new Date().getTime();
-        const distance = eventDate - now;
+        const diff = eventDate - now;
 
-        if (distance < 0) {
-          clearInterval(timer);
-          document.getElementById("days").innerText = "00";
-          document.getElementById("hours").innerText = "00";
-          document.getElementById("minutes").innerText = "00";
-          return;
-        }
+        if (diff <= 0) return;
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-        document.getElementById("days").innerText = days < 10 ? '0' + days : days;
-        document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
-        document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+        document.getElementById("count-d").innerText = days < 10 ? '0' + days : days;
+        document.getElementById("count-h").innerText = hours < 10 ? '0' + hours : hours;
+        document.getElementById("count-m").innerText = minutes < 10 ? '0' + minutes : minutes;
       }, 1000);
     }
 
-    // ENVÍO DE RSVP A WHATSAPP
-    function sendRSVP(phoneNumber) {
-      const name = document.getElementById('guest-name').value.trim();
-      const count = document.getElementById('guest-count').value;
+    // ENVÍO DE CONFIRMACIÓN A WHATSAPP
+    function sendWhatsApp(phone) {
+      const name = document.getElementById('input-name').value.trim();
+      const count = document.getElementById('input-count').value;
 
       if (!name) {
-        alert('Por favor escribe tu nombre antes de confirmar.');
+        alert('Por favor escribe tu nombre completo para confirmar.');
         return;
       }
 
-      const text = `¡Hola! Confirmó asistencia para el Baby Shower 💙%0A%0A👤 *Nombre:* ${encodeURIComponent(name)}%0A👥 *Asistentes:* ${encodeURIComponent(count)}%0A¡Ahí nos vemos!`;
+      const message = `¡Hola! Confirmo mi asistencia al Baby Shower 💙%0A%0A👤 *Nombre:* ${encodeURIComponent(name)}%0A🎟️ *Pases:* ${encodeURIComponent(count)}%0A¡Nos vemos en la celebración!`;
       
-      window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
+      window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
     }
   </script>
 </body>
