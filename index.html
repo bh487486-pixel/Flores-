@@ -1,242 +1,587 @@
-<!DOCTYPE1 html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>¡Revelación y Baby Shower!</title>
+  <title>¡Una Gran Sorpresa te Espera! 🎉</title>
   
-  <!-- Fuente elegante e infantil -->
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Fuentes Elegantes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Librería de Confeti para la sorpresa -->
+  <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
+    :root {
+      /* Paleta Neutra Inicial (Misterio / Neutro) */
+      --bg-gradient: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fef08a 100%);
+      --accent-color: #d97706;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --gold-accent: #f59e0b;
+      --boy-blue-dark: #0284c7;
+      --boy-blue-light: #e0f2fe;
+    }
+
+    /* Cambio Dinámico a Azul al Revelar */
+    body.revealed-theme {
+      --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+      --accent-color: #0284c7;
+      --text-main: #0c4a6e;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      transition: background 1s ease, color 0.5s ease;
     }
 
     body {
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-gradient);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      color: #0c4a6e;
+      color: var(--text-main);
     }
 
-    .card {
-      background: #ffffff;
-      max-width: 480px;
+    .container {
       width: 100%;
-      border-radius: 24px;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-      padding: 32px 24px;
+      max-width: 550px;
+    }
+
+    /* TARJETA PRINCIPAL */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      padding: 40px 28px;
       text-align: center;
       position: relative;
       overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.6);
     }
 
-    /* ESTILOS DE LA REVELACIÓN DE GÉNERO */
-    #reveal-screen h1 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.8rem;
-      color: #0284c7;
-      margin-bottom: 15px;
+    /* PANTALLA DE MISTERIO */
+    #mystery-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    #reveal-screen p {
-      font-size: 1.1rem;
-      margin-bottom: 25px;
-      color: #334155;
-    }
-
-    .reveal-btn {
-      background: linear-gradient(135deg, #38bdf8, #0284c7);
+    .mystery-box {
+      width: 110px;
+      height: 110px;
+      background: linear-gradient(135deg, #fbbf24, #d97706);
+      border-radius: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3.5rem;
       color: white;
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.2rem;
-      padding: 16px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 15px 25px -5px rgba(217, 119, 6, 0.4);
+      animation: pulse-glow 2s infinite alternate;
+    }
+
+    @keyframes pulse-glow {
+      0% { transform: scale(1); box-shadow: 0 15px 25px -5px rgba(217, 119, 6, 0.4); }
+      100% { transform: scale(1.08); box-shadow: 0 20px 35px -5px rgba(217, 119, 6, 0.6); }
+    }
+
+    .mystery-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.1rem;
+      color: #78350f;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .mystery-desc {
+      font-size: 1.05rem;
+      color: #92400e;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .btn-reveal {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      padding: 18px 36px;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 10px 15px -3px rgba(2, 132, 199, 0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 12px 20px -5px rgba(217, 119, 6, 0.5);
+      transition: all 0.3s ease;
+      width: 100%;
     }
 
-    .reveal-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 20px -3px rgba(2, 132, 199, 0.5);
+    .btn-reveal:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 18px 28px -5px rgba(217, 119, 6, 0.6);
     }
 
-    /* ESTILOS DE LA INVITACIÓN (OCULTA AL INICIO) */
+    /* INVITACIÓN PRINCIPAL (OCULTA INICIALMENTE) */
     #invitation-screen {
       display: none;
       opacity: 0;
-      transition: opacity 0.8s ease-in-out;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .gender-badge {
+    #invitation-screen.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gender-banner {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.6rem;
+      padding: 12px 24px;
+      border-radius: 50px;
       display: inline-block;
-      background-color: #e0f2fe;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 20px rgba(2, 132, 199, 0.3);
+      animation: bounce 1s ease;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-15px);}
+      60% {transform: translateY(-7px);}
+    }
+
+    .main-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.6rem;
       color: #0369a1;
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.4rem;
-      padding: 8px 20px;
-      border-radius: 30px;
-      margin-bottom: 15px;
-      border: 2px dashed #38bdf8;
+      margin-bottom: 6px;
     }
 
-    .invitation-title {
-      font-family: 'Fredoka One', cursive;
-      font-size: 2.2rem;
+    .sub-title {
+      font-size: 1.15rem;
       color: #0284c7;
-      margin-bottom: 10px;
+      font-weight: 500;
+      margin-bottom: 28px;
     }
 
-    .baby-name {
-      font-size: 1.3rem;
-      color: #475569;
-      margin-bottom: 25px;
+    /* DÍAS Y CUENTA REGRESIVA */
+    .countdown-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 30px;
     }
 
-    .details-box {
-      background-color: #f0f9ff;
+    .count-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
       border-radius: 16px;
+      padding: 12px;
+      min-width: 75px;
+    }
+
+    .count-num {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.6rem;
+      color: #0284c7;
+    }
+
+    .count-label {
+      font-size: 0.75rem;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* TARJETAS DETALLE */
+    .info-card {
+      background: #ffffff;
+      border-radius: 20px;
       padding: 20px;
-      margin-bottom: 25px;
+      margin-bottom: 16px;
+      text-align: left;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .info-icon {
+      width: 50px;
+      height: 50px;
+      background: #e0f2fe;
+      border-radius: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: #0284c7;
+      flex-shrink: 0;
+    }
+
+    .info-content h3 {
+      font-size: 0.85rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .info-content p {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    /* ITINERARIO */
+    .section-header {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.4rem;
+      color: #0369a1;
+      margin: 28px 0 16px 0;
       text-align: left;
     }
 
-    .detail-item {
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px dashed #38bdf8;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 16px;
+      padding-left: 15px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -26px;
+      top: 2px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #0284c7;
+      border: 3px solid #ffffff;
+    }
+
+    .timeline-time {
+      font-weight: 700;
+      color: #0284c7;
+      font-size: 0.9rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    /* MESAS DE REGALOS */
+    .gift-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .gift-btn {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 12px;
+      color: #334155;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
       display: flex;
       align-items: center;
-      margin-bottom: 12px;
-      font-size: 1rem;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
     }
 
-    .detail-item:last-child {
-      margin-bottom: 0;
+    .gift-btn:hover {
+      background: #e0f2fe;
+      border-color: #38bdf8;
+      color: #0284c7;
     }
 
-    .icon {
-      font-size: 1.4rem;
-      margin-right: 12px;
-      width: 30px;
-      text-align: center;
+    /* FORMULARIO DE CONFIRMACIÓN */
+    .rsvp-form {
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: left;
+      margin-bottom: 20px;
     }
 
-    .confirm-btn {
-      display: inline-block;
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .form-input {
       width: 100%;
-      background-color: #22c55e;
-      color: white;
-      text-decoration: none;
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.1rem;
-      padding: 14px;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.3);
-      transition: background-color 0.2s;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
     }
 
-    .confirm-btn:hover {
-      background-color: #16a34a;
+    .form-input:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px -3px rgba(16, 185, 129, 0.4);
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    
-    <!-- PASO 1: PANTALLA DE REVELACIÓN -->
-    <div id="reveal-screen">
-      <div style="font-size: 4rem; margin-bottom: 15px;">🎁</div>
-      <h1>¡Tenemos un anuncio especial!</h1>
-      <p>Haz clic en el botón para descubrir el género del bebé:</p>
-      <button class="reveal-btn" onclick="revealGender()">✨ ¡Descubrir Género! ✨</button>
-    </div>
+  <div class="container">
+    <div class="card">
 
-    <!-- PASO 2: PANTALLA DE INVITACIÓN (OCULTA) -->
-    <div id="invitation-screen">
-      <div class="gender-badge">👦 ¡Es un Varón! 💙</div>
-      <h1 class="invitation-title">Baby Shower</h1>
-      <p class="baby-name">Acompáñanos a celebrar la llegada de nuestro niño</p>
-
-      <!-- DETALLES DEL EVENTO (Personaliza estos datos) -->
-      <div class="details-box">
-        <div class="detail-item">
-          <span class="icon">📅</span>
-          <div><strong>Fecha:</strong> Sábado, 15 de Noviembre</div>
-        </div>
-        <div class="detail-item">
-          <span class="icon">⏰</span>
-          <div><strong>Hora:</strong> 4:00 PM</div>
-        </div>
-        <div class="detail-item">
-          <span class="icon">📍</span>
-          <div><strong>Lugar:</strong> Salón de Eventos "El Recreo"</div>
-        </div>
-        <div class="detail-item">
-          <span class="icon">🏡</span>
-          <div><strong>Dirección:</strong> Av. Principal #123, Ciudad</div>
-        </div>
+      <!-- FASE 1: PANTALLA MISTERIO (COLORES NEUTROS / DORADOS) -->
+      <div id="mystery-screen">
+        <div class="mystery-box">❓</div>
+        <h1 class="mystery-title">¿Qué Será?</h1>
+        <p class="mystery-desc">Estamos muy felices de compartir este momento especial con ustedes. ¡Toca el botón para descubrir la gran noticia!</p>
+        <button class="btn-reveal" onclick="triggerReveal()">✨ Revelar la Sorpresa ✨</button>
       </div>
 
-      <!-- BOTÓN DE CONFIRMACIÓN A WHATSAPP -->
-      <a href="https://wa.me/1234567890?text=¡Hola!%20Confirmo%20mi%20asistencia%20al%20Baby%20Shower%20💙" 
-         target="_blank" 
-         class="confirm-btn">
-         📲 Confirmar Asistencia por WhatsApp
-      </a>
-    </div>
+      <!-- FASE 2: INVITACIÓN COMPLETA (COLOR AZUL REVELADO) -->
+      <div id="invitation-screen">
+        
+        <div class="gender-banner">👦 ¡ES UN NIÑO! 💙</div>
+        <h1 class="main-title">Baby Shower</h1>
+        <p class="sub-title">Te invitamos a celebrar la llegada de nuestro príncipe</p>
 
+        <!-- CUENTA REGRESIVA -->
+        <div class="countdown-container">
+          <div class="count-box">
+            <div class="count-num" id="days">00</div>
+            <div class="count-label">Días</div>
+          </div>
+          <div class="count-box">
+            <div class="count-num" id="hours">00</div>
+            <div class="count-label">Horas</div>
+          </div>
+          <div class="count-box">
+            <div class="count-num" id="minutes">00</div>
+            <div class="count-label">Min</div>
+          </div>
+        </div>
+
+        <!-- TARJETAS DE INFORMACIÓN -->
+        <div class="info-card">
+          <div class="info-icon">📅</div>
+          <div class="info-content">
+            <h3>Fecha</h3>
+            <p>Sábado, 15 de Noviembre, 2026</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">⏰</div>
+          <div class="info-content">
+            <h3>Horario</h3>
+            <p>4:00 PM - 9:00 PM</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">📍</div>
+          <div class="info-content">
+            <h3>Lugar & Ubicación</h3>
+            <p>Salón de Eventos "El Recreo"</p>
+            <span style="font-size:0.85rem; color:#64748b;">Av. Principal #123, Toluca</span>
+          </div>
+        </div>
+
+        <!-- BOTÓN GOOGLE MAPS -->
+        <a href="https://maps.google.com" target="_blank" class="gift-btn" style="margin-bottom:24px; background:#e0f2fe; border-color:#7dd3fc; color:#0369a1;">
+          🗺️ Ver Ubicación en Google Maps
+        </a>
+
+        <!-- ITINERARIO DEL EVENTO -->
+        <h2 class="section-header">Programación del Evento</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-time">4:00 PM</div>
+            <div class="timeline-desc">Llegada y Recepción de Invitados</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">5:00 PM</div>
+            <div class="timeline-desc">Juegos y Dinámicas Divertidas</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">6:30 PM</div>
+            <div class="timeline-desc">Banquete y Merienda</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">7:30 PM</div>
+            <div class="timeline-desc">Agradecimientos y Pastel</div>
+          </div>
+        </div>
+
+        <!-- MESAS DE REGALOS -->
+        <h2 class="section-header">Mesa de Regalos</h2>
+        <div class="gift-grid">
+          <a href="#" target="_blank" class="gift-btn">🎁 Amazon</a>
+          <a href="#" target="_blank" class="gift-btn">🛍️ Liverpool</a>
+        </div>
+
+        <!-- FORMULARIO RSVP / WHATSAPP -->
+        <h2 class="section-header">Confirmar Asistencia</h2>
+        <div class="rsvp-form">
+          <div class="form-group">
+            <label for="guest-name">Tu Nombre Completo:</label>
+            <input type="text" id="guest-name" class="form-input" placeholder="Ej. Familia Pérez" />
+          </div>
+          <div class="form-group">
+            <label for="guest-count">Número de Asistentes:</label>
+            <select id="guest-count" class="form-input">
+              <option value="1 persona">1 persona</option>
+              <option value="2 personas">2 personas</option>
+              <option value="3 personas">3 personas</option>
+              <option value="Familia">Familia entera</option>
+            </select>
+          </div>
+          <!-- CAMBIA EL NÚMERO 527200000000 POR TU WHATSAPP CON LADA -->
+          <button class="btn-submit" onclick="sendRSVP('527200000000')">
+            📲 Confirmar por WhatsApp
+          </button>
+        </div>
+
+      </div>
+
+    </div>
   </div>
 
   <script>
-    function revealGender() {
-      // 1. Ocultar pantalla de revelación
-      document.getElementById('reveal-screen').style.display = 'none';
-      
-      // 2. Mostrar pantalla de invitación con animación
-      const invScreen = document.getElementById('invitation-screen');
-      invScreen.style.display = 'block';
-      setTimeout(() => {
-        invScreen.style.opacity = '1';
-      }, 50);
+    // FONT Y REVELACIÓN INTERACTIVA
+    function triggerReveal() {
+      // 1. Cambiar tema visual a Azul
+      document.body.classList.add('revealed-theme');
 
-      // 3. Lluvia de confeti de colores azul y blanco
-      confetti({
-        particleCount: 150,
-        spread: 80,
-        origin: { y: 0.6 },
-        colors: ['#38bdf8', '#0284c7', '#ffffff', '#bae6fd']
-      });
+      // 2. Transición de pantallas
+      document.getElementById('mystery-screen').style.display = 'none';
+      const inv = document.getElementById('invitation-screen');
+      inv.classList.add('active');
 
-      // Segunda ráfaga de confeti para más emoción
-      setTimeout(() => {
+      // 3. Explosión de Confeti Épica
+      const duration = 3 * 1000;
+      const end = Date.now() + duration;
+
+      (function frame() {
         confetti({
-          particleCount: 100,
+          particleCount: 7,
           angle: 60,
           spread: 55,
           origin: { x: 0 },
-          colors: ['#38bdf8', '#0284c7', '#ffffff']
+          colors: ['#0284c7', '#38bdf8', '#ffffff', '#bae6fd']
         });
         confetti({
-          particleCount: 100,
+          particleCount: 7,
           angle: 120,
           spread: 55,
           origin: { x: 1 },
-          colors: ['#38bdf8', '#0284c7', '#ffffff']
+          colors: ['#0284c7', '#38bdf8', '#ffffff', '#bae6fd']
         });
-      }, 300);
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+
+      // Iniciar contador al revelar
+      startCountdown();
+    }
+
+    // CUENTA REGRESIVA A LA FECHA
+    function startCountdown() {
+      // Ajusta la fecha del evento aquí (Año, Mes-1, Día, Hora, Minutos)
+      const eventDate = new Date(2026, 10, 15, 16, 0, 0).getTime();
+
+      const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        if (distance < 0) {
+          clearInterval(timer);
+          document.getElementById("days").innerText = "00";
+          document.getElementById("hours").innerText = "00";
+          document.getElementById("minutes").innerText = "00";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+        document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+        document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+      }, 1000);
+    }
+
+    // ENVÍO DE RSVP A WHATSAPP
+    function sendRSVP(phoneNumber) {
+      const name = document.getElementById('guest-name').value.trim();
+      const count = document.getElementById('guest-count').value;
+
+      if (!name) {
+        alert('Por favor escribe tu nombre antes de confirmar.');
+        return;
+      }
+
+      const text = `¡Hola! Confirmó asistencia para el Baby Shower 💙%0A%0A👤 *Nombre:* ${encodeURIComponent(name)}%0A👥 *Asistentes:* ${encodeURIComponent(count)}%0A¡Ahí nos vemos!`;
+      
+      window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
     }
   </script>
-
 </body>
 </html>
