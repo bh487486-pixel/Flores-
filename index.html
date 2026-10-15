@@ -259,86 +259,12 @@
       color: #0f172a;
     }
 
-    /* BOTÓN MAPA */
-    .map-link-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background-color: #0284c7;
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-      padding: 16px;
-      border-radius: 16px;
-      margin-bottom: 32px;
-      box-shadow: 0 8px 16px rgba(2, 132, 199, 0.25);
-    }
-
-    /* ITINERARIO */
     .section-title {
       font-family: 'Fredoka', sans-serif;
       font-size: 1.5rem;
       color: var(--text-title);
       margin: 32px 0 18px 0;
       text-align: left;
-    }
-
-    .itinerary-list {
-      border-left: 3px solid #7dd3fc;
-      padding-left: 20px;
-      text-align: left;
-      margin-bottom: 32px;
-    }
-
-    .itinerary-step {
-      margin-bottom: 20px;
-      position: relative;
-    }
-
-    .itinerary-step::before {
-      content: '';
-      position: absolute;
-      left: -27px;
-      top: 4px;
-      width: 12px;
-      height: 12px;
-      background-color: #0284c7;
-      border-radius: 50%;
-      border: 3px solid #ffffff;
-    }
-
-    .step-time {
-      font-weight: 800;
-      color: #0284c7;
-      font-size: 0.95rem;
-    }
-
-    .step-desc {
-      color: #334155;
-      font-size: 1rem;
-    }
-
-    /* MESAS DE REGALO */
-    .gifts-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 32px;
-    }
-
-    .gift-card-link {
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
-      padding: 16px;
-      border-radius: 16px;
-      text-decoration: none;
-      color: #1e293b;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
     }
 
     /* FORMULARIO RSVP */
@@ -348,6 +274,7 @@
       border-radius: 24px;
       padding: 24px;
       text-align: left;
+      margin-top: 24px;
     }
 
     .field-group {
@@ -434,7 +361,7 @@
           <div class="detail-icon-bg">📅</div>
           <div class="detail-text">
             <h4>Fecha del Evento</h4>
-            <p>Sábado, 28 de Noviembre, 2026</p>
+            <p>Sábado, 7 de Noviembre, 2026</p>
           </div>
         </div>
 
@@ -450,41 +377,8 @@
           <div class="detail-icon-bg">📍</div>
           <div class="detail-text">
             <h4>Lugar del Evento</h4>
-            <p>Salón de Eventos "Jardín Real"</p>
+            <p>Salón de eventos Fany, La Providencia Pachuca Hidalgo</p>
           </div>
-        </div>
-
-        <!-- LINK A MAPS -->
-        <a href="https://maps.google.com" target="_blank" class="map-link-btn">
-          📍 Abrir Ubicación en Google Maps
-        </a>
-
-        <!-- ITINERARIO -->
-        <h3 class="section-title">Itinerario de Celebración</h3>
-        <div class="itinerary-list">
-          <div class="itinerary-step">
-            <div class="step-time">4:00 PM</div>
-            <div class="step-desc">Bienvenida y Recepción</div>
-          </div>
-          <div class="itinerary-step">
-            <div class="step-time">5:00 PM</div>
-            <div class="step-desc">Juegos de Baby Shower & Dinámicas</div>
-          </div>
-          <div class="itinerary-step">
-            <div class="step-time">6:30 PM</div>
-            <div class="step-desc">Cena y Brindis</div>
-          </div>
-          <div class="itinerary-step">
-            <div class="step-time">7:30 PM</div>
-            <div class="step-desc">Corte de Pastel y Agradecimiento</div>
-          </div>
-        </div>
-
-        <!-- MESAS DE REGALO -->
-        <h3 class="section-title">Mesa de Regalos</h3>
-        <div class="gifts-row">
-          <a href="#" target="_blank" class="gift-card-link">🎁 Amazon</a>
-          <a href="#" target="_blank" class="gift-card-link">🛍️ Liverpool</a>
         </div>
 
         <!-- CONFIRMACIÓN POR WHATSAPP (DIRIGIDO A LA MAMÁ) -->
@@ -557,8 +451,8 @@
 
     // RELOJ REGRESIVO
     function initTimer() {
-      // Configura la fecha aquí: (Año, Mes-1, Día, Hora, Minutos)
-      const eventDate = new Date(2026, 10, 28, 16, 0, 0).getTime();
+      // Configurado para el 7 de Noviembre de 2026 a las 4:00 PM (Mes 10 es Noviembre en JavaScript)
+      const eventDate = new Date(2026, 10, 7, 16, 0, 0).getTime();
 
       setInterval(() => {
         const now = new Date().getTime();
